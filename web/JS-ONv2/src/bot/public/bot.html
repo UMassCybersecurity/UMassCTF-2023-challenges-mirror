@@ -1,0 +1,35 @@
+<body style="text-align: center;">
+    <script>
+        window.onload = ()=>{
+            document.getElementById('form').onsubmit = (e)=>{
+                let output = document.getElementById('admin-resp');
+                output.innerText = 'Admin is checking this out!';
+                fetch('/lookup',{
+                    method:'POST',
+                    headers:{'Content-Type':'application/json'},
+                    body:JSON.stringify({'URL':e.target[0].value})
+                })
+                    .then(resp=>resp.json()
+                    .then(json=>{
+                        if(json.error){
+                            output.innerText = json.error;
+                        }
+                        else{
+                            output.innerText = json.success;
+                        }
+                    })
+                )
+                return false;
+            }
+        }
+    </script>
+    <h1>Admin Bot</h1>
+    <h2>Put a URL for the admin to visit. Must be on the site!</h2>
+    <form id='form'>
+        <input name="adminValue"/>
+        <button>Submit</button>
+    </form>
+    <h3>Response from Admin</h3>
+    <div id="admin-resp">
+    </div>
+</body>

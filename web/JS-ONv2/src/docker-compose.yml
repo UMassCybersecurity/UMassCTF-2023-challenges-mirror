@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  app:
+    depends_on:
+      - cache
+    build:
+      context: app
+    environment:
+      SERVER_PORT: 3000
+      ADMIN_ACCOUNT: "iPr0m1s3i4mn0ts1lv3r1"
+      FLAG: UMASS{W41T_1_Th0ught_1_b4nn3d_th41_lm40}
+      REDIS_URL: redis://cache:6379
+    ports:
+      - "3000:3000"
+  bot:
+    build:
+      context: bot
+    environment:
+      DOMAIN: 'set ur domain here'
+      ADMIN_ACCOUNT: "iPr0m1s3i4mn0ts1lv3r1"
+    ports:
+      - '9000:9000'
+  cache:
+    image: redis:latest
+    restart: always

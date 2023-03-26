@@ -1,0 +1,21 @@
+FROM ubuntu:20.04
+
+
+RUN apt-get update
+RUN apt-get install -y python3-pip python3-dev build-essential
+
+RUN useradd -d /home/ctf/ -m -p ctf -s /bin/bash ctf
+RUN echo "ctf:ctf" | chpasswd
+
+WORKDIR /home/ctf
+
+COPY . .
+
+RUN chown -R root:root /home/ctf
+RUN chmod +x /home/ctf/ynetd
+
+RUN pip install pycryptodome
+
+USER ctf
+EXPOSE 9953
+CMD ./ynetd -p 9953 "python3 wrath.py"

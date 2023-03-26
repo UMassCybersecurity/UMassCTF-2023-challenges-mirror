@@ -1,0 +1,15 @@
+{
+	"revision": 1,
+	"challenge": {
+	    "type": "spot",
+	    "category": "pwn",
+	    "initial": 500,
+	    "minimum": 100,
+	    "decay": 150,
+	    "description": "I was in a time crunch to build out this Python sandbox for class. I only had a week to work on it, but I think it does pretty well.<br><br>JaKob"
+	},
+	"challenge_id": "arn:aws:ecs:us-east-1:268185074885:task-definition/pwn/babysc:1",
+	"ports": [3000],
+	"flags": ["UMASS{b3_6l4d_y0u_d1dn7_h4v3_70_3xpl017_5p3c7r3}"],
+	"tags": ["pwn"]
+}

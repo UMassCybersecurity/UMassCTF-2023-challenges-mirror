@@ -1,0 +1,5 @@
+bin/
+pkg/
+dist/
+node_modules/
+

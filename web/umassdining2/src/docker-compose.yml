@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  app:
+    build:
+      context: .
+    depends_on:
+      - db
+    environment:
+      SQL_HOST: db
+      MYSQL_ROOT_PASSWORD: umassdiningisepic69420
+      SERVER_PORT: 6942
+      JWT_SECRET: aSm0K3aD4Yk33P$tH3d0ct0r4w4y
+      FLAG: UMASS{F0rg0t_T0_R3TuRn_4nd_l0st_mY_FL4g}
+    ports:
+      - "6942:6942"
+
+  db:
+    image: mysql:8.0.32
+    restart: always
+    command: --init-file /tmp/db/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: umassdiningisepic69420
+    volumes:
+      - "./init:/tmp/db"

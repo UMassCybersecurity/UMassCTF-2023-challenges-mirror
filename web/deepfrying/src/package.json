@@ -1,0 +1,14 @@
+{
+  "name": "larrys_jsexpress",
+  "version": "1.0.0",
+  "description": "My docker image to test JS Express",
+  "main": "Joe.js",
+  "author": "MrLarryMan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nunjucks": "^3.2.3",
+    "canvas": "^2.11.0",
+    "express-fileupload": "^1.4.0"
+  }
+}

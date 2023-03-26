@@ -1,0 +1,5 @@
+venv/
+tests/*.bytecode
+Cargo.lock
+python_compiler/target
+target/

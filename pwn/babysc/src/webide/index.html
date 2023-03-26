@@ -1,0 +1,172 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Online Python Interpreter</title>
+<script>
+Pyrun = function() {
+  var outnode = document.getElementById("Pyoutput");
+  var tnode = document.getElementById("Pytiming");
+
+  let xhr = new XMLHttpRequest();
+  xhr.open('POST', "/eval", true);
+
+  xhr.onload = function(data) {
+    switch (xhr.status) {
+    case 200:
+      let resp = JSON.parse(xhr.response);
+      outnode.value = resp.stdout + "\n" + resp.stderr;
+      tnode.innerHTML = resp.time;
+      break;
+    default:
+      alert("Failed: " + xhr.response);
+      break;
+    }
+  }
+  xhr.onerror = function(error) {
+    throw new Error(`Request failed: ${error}`);
+  }
+
+  xhr.send(document.getElementById("Pyprogram").value);
+}
+
+Pyselect = function() {
+    var id = document.getElementById("Pyexamples").value;
+    var str = document.getElementById(id).value;
+    document.getElementById("Pyprogram").value = str;
+    Pyrun();
+}  
+</script>
+<style>td {background:white; vertical-align:top; border:1px solid black; padding:2px 10px}
+pre {margin:0}
+table {border-collapse:collapse; table-layout:fixed}
+body {background:lightblue; font-family:Arial}
+textarea {font-family:Lucida console}
+</style>
+</head>
+<body><!-- onpaste="return false;"-->
+<b><u>Online Python Interpreter:</u> Programming anywhere, nothing to install, works in any browser
+</b><br>
+Type your Python program into the box below. Then click the <b>Run</b>
+button to see the result.  To <b>save your work</b>, select the text
+and copy it to an editor or email it to yourself.
+<table width="100%">
+<tbody><tr><td><b>Type Python</b> &nbsp; &nbsp; Examples: <select id="Pyexamples" onchange="Pyselect()">
+<option value="maximum" selected="selected">Maximum element</option>
+<option value="linear">Linear search</option>
+<option value="binary">Binary search</option>
+<option value="bubble">Bubble sort</option>
+</select>
+</td><td>
+<input type="button" value="Run" onclick="Pyrun()"> &nbsp; &nbsp;
+<b>Output</b> &nbsp; &nbsp; 
+Timing: <span id="Pytiming">0</span> ms
+</td></tr>
+<tr><td style="padding:1px" width="50%">
+<textarea id="Pyprogram" style="height:5in; width:100%; font-family: monospace; font-size: 16; font-weight: bold;" onkeyup="keyUp(event)"># Find the maximum value in a list of numbers
+
+def max(a):
+    m = a[0]
+    for i in range(len(a)):
+        print("m = {}".format(i))
+        if m < a[i]:
+            m = a[i]
+    return m
+
+a = [6, 2, 3, 9, 5, 8]
+print(a)
+print(max(a))
+</textarea>
+</td>
+<td style="padding:1px" width="50%">
+<textarea id="Pyoutput" style="height:5in; width:100%; font-family: monospace; font-size: 16; font-weight: bold;"></textarea></td>
+</tr>
+</tbody></table>
+
+<b>Note that this is dynamic code.  If you leave this page before copying and saving your work, it may disappear.
+</b>
+
+<textarea id="maximum" style="display:none"># Find the maximum value in a list of numbers
+
+def max(a):
+    m = a[0]
+    for i in range(len(a)):
+        print("m = {}".format(i))
+        if m < a[i]:
+            m = a[i]
+    return m
+
+a = [6, 2, 3, 9, 5, 8]
+print(a)
+print(max(a))
+</textarea>
+
+<textarea id="linear" style="display:none"># Find first occurrence of an element in a list of numbers
+
+def linear_search(x, a):
+    i = 0
+    while i < len(a) and x != a[i]:
+        print("i = {}".format(i))
+        i = i+1
+    if i < len(a):
+        return i
+    else:
+        return "not found"
+
+a = [6, 2, 3, 9, 5, 8]
+print(a)
+print(linear_search(3,a))
+</textarea>
+
+<textarea id="binary" style="display:none"># Find first occurrence of an element in a *sorted* list of numbers
+
+def binary_search(value, l):
+    low = 0
+    high = len(l)-1
+    while low <= high: 
+        mid = (low+high)//2
+        if l[mid] > value: high = mid-1
+        elif l[mid] < value: low = mid+1
+        else: return mid
+    return -1
+
+print(binary_search(3, [1,2,2,2,3,3,4,5,6,7,8]))
+</textarea>
+
+<textarea id="bubble" style="display:none"># Sort a list of numbers using (inefficient) bubble sort
+
+def bubble_sort(seq):
+    """Inefficiently sort the mutable sequence (list) in place.
+       seq MUST BE A MUTABLE SEQUENCE.
+
+       As with list.sort() and random.shuffle this does NOT return 
+    """
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(seq) - 1):
+            if seq[i] > seq[i+1]:
+                seq[i], seq[i+1] = seq[i+1], seq[i]
+                changed = True
+    return seq
+
+a = [6, 2, 3, 9, 5, 8]
+print(a)
+print(bubble_sort(a))
+</textarea>
+
+<hr>
+
+<div align="center">
+<a href="http://www.chapman.edu/~jipsen/">Peter Jipsen</a>, 
+January 2013,
+<a href="http://www.chapman.edu/">Chapman University</a>
+<br>
+<a href="https://jakob.space/">Jakob Kreuze</a>, 
+March 2023,
+<a href="https://brown.edu/">Brown University</a>
+<br>
+<p>Thanks to the folks at Rosetta Code for th binary_search and bubble_sort implementations. This is mostly ripped from <a href="https://math.chapman.edu/~jipsen/js/">this page.</a></p>
+</div>
+
+
+
+</body></html>

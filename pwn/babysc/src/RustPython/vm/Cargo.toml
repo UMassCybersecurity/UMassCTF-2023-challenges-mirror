@@ -1,0 +1,133 @@
+[package]
+name = "rustpython-vm"
+version = "0.2.0"
+description = "Rust Python virtual machine."
+authors = ["RustPython Team"]
+repository = "https://github.com/RustPython/RustPython"
+license = "MIT"
+edition = "2021"
+include = ["src/**/*.rs", "Cargo.toml", "build.rs", "Lib/**/*.py"]
+
+[features]
+default = ["compiler"]
+importlib = []
+encodings = ["importlib"]
+vm-tracing-logging = []
+flame-it = ["flame", "flamer"]
+freeze-stdlib = []
+jit = ["rustpython-jit"]
+threading = ["rustpython-common/threading"]
+compiler = ["parser", "codegen", "rustpython-compiler"]
+ast = ["rustpython-ast"]
+codegen = ["rustpython-codegen", "ast"]
+parser = ["rustpython-parser", "ast"]
+
+[dependencies]
+rustpython-compiler = { path = "../compiler", optional = true, version = "0.2.0" }
+rustpython-ast = { path = "../compiler/ast", optional = true, version = "0.2.0" }
+rustpython-parser = { path = "../compiler/parser", optional = true, version = "0.2.0" }
+rustpython-codegen = { path = "../compiler/codegen", optional = true, version = "0.2.0" }
+rustpython-compiler-core = { path = "../compiler/core", version = "0.2.0" }
+rustpython-common = { path = "../common" }
+rustpython-derive = { path = "../derive", version = "0.2.0" }
+rustpython-jit = { path = "../jit", optional = true, version = "0.2.0" }
+
+ascii = { workspace = true }
+ahash = { workspace = true }
+atty = { workspace = true }
+bitflags = { workspace = true }
+bstr = { workspace = true }
+cfg-if = { workspace = true }
+crossbeam-utils = { workspace = true }
+chrono = { workspace = true, features = ["wasmbind"] }
+flame = { workspace = true, optional = true }
+hex = { workspace = true }
+indexmap = { workspace = true }
+itertools = { workspace = true }
+libc = { workspace = true }
+log = { workspace = true }
+nix = { workspace = true }
+num-bigint = { workspace = true, features = ["serde"] }
+num-complex = { workspace = true, features = ["serde"] }
+num-integer = { workspace = true }
+num-rational = { workspace = true }
+num-traits = { workspace = true }
+num_enum = { workspace = true }
+once_cell = { workspace = true }
+parking_lot = { workspace = true }
+paste = { workspace = true }
+rand = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+static_assertions = { workspace = true }
+thiserror = { workspace = true }
+thread_local = { workspace = true }
+
+caseless = "0.2.1"
+getrandom = { version = "0.2.6", features = ["js"] }
+flamer = { version = "0.4", optional = true }
+half = "1.8.2"
+hmac = "0.12"
+is-macro = "0.2.0"
+memchr = "2.4.1"
+memoffset = "0.6.5"
+optional = "0.5.0"
+result-like = "0.4.5"
+timsort = "0.1.2"
+sha2 = "0.10"
+
+# RustPython crates implementing functionality based on CPython
+sre-engine = "0.4.1"
+# to work on sre-engine locally or git version
+# sre-engine = { git = "https://github.com/RustPython/sre-engine", rev = "refs/pull/14/head" }
+# sre-engine = { git = "https://github.com/RustPython/sre-engine" }
+# sre-engine = { path = "../../sre-engine" }
+
+## unicode stuff
+unicode_names2 = "0.5.1"
+# TODO: use unic for this; needed for title case:
+# https://github.com/RustPython/RustPython/pull/832#discussion_r275428939
+unicode-casing = "0.1.0"
+# update version all at the same time
+unic-ucd-bidi      = "0.9.0"
+unic-ucd-category  = "0.9.0"
+unic-ucd-ident     = "0.9.0"
+
+[target.'cfg(unix)'.dependencies]
+exitcode = "1.1.2"
+uname = "0.1.1"
+strum = "0.24.0"
+strum_macros = "0.24.0"
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+rustyline = { workspace = true }
+which = "4.2.5"
+
+[target.'cfg(any(not(target_arch = "wasm32"), target_os = "wasi"))'.dependencies]
+num_cpus = "1.13.1"
+
+[target.'cfg(windows)'.dependencies]
+schannel = { workspace = true }
+widestring = { workspace = true }
+winreg = "0.10.1"
+
+[target.'cfg(windows)'.dependencies.windows]
+version = "0.39.0"
+features = [
+  "Win32_UI_Shell", "Win32_System_LibraryLoader", "Win32_Foundation"
+]
+
+[target.'cfg(windows)'.dependencies.winapi]
+version = "0.3.9"
+features = [
+  "winsock2", "handleapi", "ws2def", "std", "winbase", "wincrypt", "fileapi", "processenv",
+  "namedpipeapi", "winnt", "processthreadsapi", "errhandlingapi", "winuser", "synchapi", "wincon",
+  "impl-default", "vcruntime", "ifdef", "netioapi", "memoryapi",
+]
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2.80"
+
+[build-dependencies]
+glob = { workspace = true }
+itertools = { workspace = true }
+rustc_version = "0.4.0"

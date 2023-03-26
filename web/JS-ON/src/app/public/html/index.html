@@ -1,0 +1,81 @@
+<html>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/south-street/jquery-ui.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/static/css/editor.css" type="text/css" media="all">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.15.3/ace.js" type="text/javascript" charset="utf-8"></script>
+    <div>
+        <h3>Your Code</h3>
+        <div>
+        <div class="myeditor" id="editor1">
+        </div>
+        <button onclick="eval(document.getElementById('editor1').innerText)">Run this code!</button>
+        </div>
+    
+        <h3>Your JS-ON</h3>
+        <div>
+        <div class="myeditor" id="editor2" style="height: 250px; width: 500px">
+        </div>
+        <button onclick="saveCode()">Save your Code & JS-ON!</button>
+        </div>
+    
+    </div>
+    <script>
+        const id = document.location.pathname.split('/')[2];
+        let editor1 = ace.edit("editor1");
+        editor1.session.setMode("ace/mode/javascript");
+        let editor2 = ace.edit("editor2");
+        editor2.session.setMode("ace/mode/json");
+        function saveCode(){
+            fetch('/code',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'},
+                body:JSON.stringify({
+                    'code':editor1.getValue(),
+                    'js-on':editor2.getValue()
+                })
+            }).then(resp=>resp.json().then(json=>{
+                if(!json.error){
+                    return location.reload();
+                }
+                alert(json.error)
+            }))
+        }
+        fetch(`/code/${id}`)
+            .then(resp=>resp.json()
+            .then(json=>{
+                let JSon = json['js-on'];
+                editor1.setValue(json.code,-1);
+                editor2.setValue(JSON.stringify(JSon,null, '\t'),-1);
+                const handleKeys = (JSon,cur)=>{
+                    Object.keys(JSon).forEach(key=>{
+                        try{
+                            let keywords = key.split('_');
+                            let type = keywords[0];
+                            let name =  keywords[1];
+                            switch(type){
+                                case 'var':
+                                    cur[name] = JSon[key];
+                                    break;
+                                case 'func':
+                                    if(!(cur[name] in cur)){
+                                        cur[name] = Function(JSon[key])
+                                    }
+                                    break;
+                                case 'obj':
+                                    cur[name] = cur[name] == undefined ? {} : cur[name];
+                                    cur = handleKeys(JSon[key],cur[name]);
+                                    break;
+                            }
+                        }
+                        catch(e){
+                            throw new Error('Error while parsing JS-ON!')
+                        }
+                    })
+                    return cur;
+                }
+                handleKeys(JSon,this)
+            }))
+    
+    </script>
+    
+</html>

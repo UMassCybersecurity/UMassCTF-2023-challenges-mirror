@@ -1,0 +1,10 @@
+#accordion {
+  height:500px;
+}
+.ace_editor {
+  width:600px;
+  height:300px;
+}
+body{
+  background-color:rgba(0, 50, 200, .8)
+}

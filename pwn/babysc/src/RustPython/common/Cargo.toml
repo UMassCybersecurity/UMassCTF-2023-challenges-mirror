@@ -1,0 +1,35 @@
+[package]
+name = "rustpython-common"
+version = "0.2.0"
+description = "General python functions and algorithms for use in RustPython"
+authors = ["RustPython Team"]
+edition = "2021"
+repository = "https://github.com/RustPython/RustPython"
+license = "MIT"
+
+[features]
+threading = ["parking_lot"]
+
+[dependencies]
+ascii = { workspace = true }
+bitflags = { workspace = true }
+cfg-if = { workspace = true }
+itertools = { workspace = true }
+libc = { workspace = true }
+num-bigint = { workspace = true }
+num-complex = { workspace = true }
+num-traits = { workspace = true }
+once_cell = { workspace = true }
+parking_lot = { workspace = true, optional = true }
+rand = { workspace = true }
+
+hexf-parse = "0.2.1"
+lexical-parse-float = { version = "0.8.0", features = ["format"] }
+lock_api = "0.4"
+radium = "0.7"
+siphasher = "0.3"
+unic-ucd-category = "0.9"
+volatile = "0.3"
+
+[target.'cfg(windows)'.dependencies]
+widestring = { workspace = true }

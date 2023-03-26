@@ -1,0 +1,18 @@
+[package]
+name = "babysc"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+axum = "0.6"
+rustpython = { path = "../RustPython/", version = "0.2.0" }
+serde = { version = "1.0", features = ["derive"] }
+tokio = { version = "1.26", features = ["full"] }
+
+[[bin]]
+name = "interpreter"
+path = "src/interpreter.rs"
+
+[[bin]]
+name = "webide"
+path = "src/webide.rs"

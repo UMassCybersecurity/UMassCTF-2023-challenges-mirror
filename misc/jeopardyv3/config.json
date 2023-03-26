@@ -1,0 +1,14 @@
+{
+	"revision": 1,
+	"challenge": {
+	    "type": "dynamic",
+	    "category": "misc",
+	    "initial": 500,
+	    "minimum": 100,
+	    "decay": 150,
+	    "description": "Good luck trying to ChatGPT your way out of this challenge, and enjoy what is likely the last iteration of Jeopardy!<br><br>Seltzerz#6678",
+		"connection_info": "nc jeopardyv3.misc.ctf.umasscybersec.org 1116"
+	},
+	"flags": ["UMASS{i-hope-you-enjoyed-my-final-challenge}"],
+	"tags": ["misc"]
+}

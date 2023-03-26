@@ -1,0 +1,19 @@
+{% extends "header.html"%}
+
+
+{% block content %}
+<form action="/register" method="post">
+    <div style="text-align:center">
+      <legend>Register</legend>
+      <div class="form-group">
+        <label class="form-label mt-4">Username</label>
+        <input  class="form-control" name="user" placeholder="admin">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1" class="form-label mt-4">Password</label>
+        <input type="password" class="form-control" name="pass" placeholder="Password">
+      </div>
+      <button type="submit" class="btn">Submit</button>
+    </div>
+</form>
+{% endblock %}

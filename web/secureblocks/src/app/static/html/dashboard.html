@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--
+            https://codepen.io/132912/pen/mZeBaa
+        !-->
+        <title>SecureBlocks</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link rel="shortcut icon" href="https://minecraft--duck132912.repl.co/icon.png"
+        type="image/x-icon" />
+        <link rel="icon" href="https://minecraft--duck132912.repl.co/icon.png"
+        type="image/x-icon" />
+    </head>
+
+    <body translate="no" onpageshow="updateidea();">
+            <script src="https://minecraft--duck132912.repl.co/script.js">
+            </script>
+            <link rel="stylesheet" type="text/css" href="https://minecraft--duck132912.repl.co/style.css">
+            <img alt="Minecraft" id="logo" src="/static/images/SecureBlocks.png"/>
+        <div id="flashingtext">Totally not a scam!</div>
+        <main>
+            <h2>Welcome to your dashboard!</h2>
+            Your balance is <b id="balance"></b>
+        </main>
+    </body>
+    <script>
+        let uid = JSON.parse(atob(document.cookie.split('.')[1])).user
+        fetch(`/balance/${uid}`).then(resp=>resp.json().then(json=>{
+            if(json.success){
+                document.getElementById('balance').innerText = json.success.balance
+            }
+        }))
+    </script>
+</html>

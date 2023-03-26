@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!--
+            https://codepen.io/132912/pen/mZeBaa
+        !-->
+        <title>SecureBlocks</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/static/css/style.css" />
+        <link rel="shortcut icon" href="https://minecraft--duck132912.repl.co/icon.png"
+        type="image/x-icon" />
+        <link rel="icon" href="https://minecraft--duck132912.repl.co/icon.png"
+        type="image/x-icon" />
+    </head>
+
+    <body translate="no" onpageshow="updateidea();">
+            <script src="https://minecraft--duck132912.repl.co/script.js">
+            </script>
+            <link rel="stylesheet" type="text/css" href="https://minecraft--duck132912.repl.co/style.css">
+            <img alt="Minecraft" id="logo" src="/static/images/SecureBlocks.png"/>
+        <div id="flashingtext">Totally not a scam!</div>
+        <main>
+            <button class="button" onclick="location.href='/dashboard'">Dashboard</button>
+            <br>
+            <button class="button" onclick="location.href='/login'">Login</button> <br>
+            <button class="button" onclick="location.href='/register'">Register</button>
+        </main>
+        <h1>Leaderboard</h1>
+        <div id="leaderboard">
+        </div>
+    </body>
+    <script>
+        fetch('/leaderboard')
+            .then(resp=>resp.json()
+            .then(json=>{
+                let leaderboard = document.getElementById('leaderboard');
+                json['leaders'].forEach((obj)=>{
+                    let li = document.createElement('button');
+                    li.className = 'button';
+                    li.innerText = `${obj.user} | ${obj.diamonds}`;
+                    leaderboard.appendChild(li);
+                })
+            }))
+       // document.getElementById
+    </script>
+</html>

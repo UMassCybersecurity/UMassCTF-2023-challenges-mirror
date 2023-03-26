@@ -1,0 +1,26 @@
+{% extends "header.html"%}
+
+
+{% block content %}
+<div style="text-align: center">
+    <h2>
+        Welcome {{user | safe}}.
+    </h2> 
+    Upload a submission for our UMass Dining "Super Fan" contest!
+    Submissions are pictures of your favorite UMass Dining meal.
+    Our admin will review your submission at a later time :)
+
+
+    <form action="/submit" enctype="multipart/form-data" method="POST">
+        <label for="formFile" class="form-label mt-4">Upload your submission!</label>
+        <input class="form-control" type="file" name="submission">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <img src="/static/images/umassdining.gif"><br>
+    YOU LOVE UMASS DINING. 
+
+</div>
+
+
+
+{% endblock %}

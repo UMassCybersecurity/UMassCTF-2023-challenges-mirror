@@ -1,0 +1,14 @@
+{
+	"revision": 1,
+	"challenge": {
+	    "type": "dynamic",
+	    "category": "misc",
+	    "initial": 500,
+	    "minimum": 100,
+	    "decay": 150,
+	    "description": "You'll need a lot of skill and a bit of luck.<br><br>Seltzerz#6678",
+		"connection_info": "nc blackjack.misc.ctf.umasscybersec.org 2207"
+	},
+	"flags": ["UMASS{the-house-always-wins}"],
+	"tags": ["misc"]
+}
