@@ -576,7 +576,7 @@ module "cluster-web-secureblocks" {
   memory         = "1024"
   auto_scaling   = false
   name           = "web-secureblocks"
-  ports          = [3000]
+  ports          = [80]
   desired_count  = 1
   subnet         = "10.0.27.0/24"
   container_env = [
@@ -611,8 +611,8 @@ module "cluster-web-secureblocks" {
   ]
   container_ports = [
     {
-      containerPort = 3000
-      hostPort      = 3000
+      containerPort = 80
+      hostPort      = 80
     }
   ]
 }
