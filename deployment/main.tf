@@ -69,7 +69,7 @@ module "ecr-crypto-wrath" {
   ecr_name = "challenge/crypto/wrath"
 }
 
-module "cluster-crypto-wrath" {
+module "cluster-crypto-wrath-fast" {
   source         = "./cluster_challenge"
   ctf            = local.ctf
   ecr_repo       = module.ecr-crypto-wrath.ecr
@@ -472,7 +472,7 @@ module "ecr-web-umassdining2" {
 
 module "db-web-umassdining2" {
   source         = "./rds/"
-  name           = "web-json-umassdining2"
+  name           = "umassdining2"
   subnet         = "10.0.5.0/24"
   subnet1        = "10.0.253.0/24"
   subnet2        = "10.0.252.0/24"
@@ -552,7 +552,7 @@ module "ecr-web-secureblocks" {
 
 module "db-web-secureblocks" {
   source         = "./rds/"
-  name           = "web-json-secureblocks"
+  name           = "secureblocks"
   subnet         = "10.0.27.0/24"
   subnet1        = "10.0.251.0/24"
   subnet2        = "10.0.250.0/24"
@@ -590,7 +590,7 @@ module "cluster-web-secureblocks" {
     },
     {
       name  = "SQL_HOST"
-      value = module.db-web-umassdining2.db_host
+      value = module.db-web-secureblocks.db_host
     },
     {
       name  = "MYSQL_ROOT_PASSWORD"
